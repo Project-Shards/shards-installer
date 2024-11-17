@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/projects/shards/installer">
+    <file preprocess="xml-stripblanks">shardsinstaller-window.ui</file>
+    <file preprocess="xml-stripblanks">widgets/shardsinstaller-disk-entry.ui</file>
+    <file preprocess="xml-stripblanks">pages/welcome/shardsinstaller-welcome.ui</file>
+    <file preprocess="xml-stripblanks">pages/disk-selection/shardsinstaller-disk-selection.ui</file>
+    <file preprocess="xml-stripblanks">pages/install-progress/shardsinstaller-install-progress.ui</file>
+    <file>style.css</file>
+  </gresource>
+  <gresource prefix="/project/shards/installer/icons/scalable/actions/">
+    <file preprocess="xml-stripblanks">../data/icons/hicolor/scalable/actions/ssd-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">../data/icons/hicolor/scalable/apps/projects.shards.installer.svg</file>
+  </gresource>
+</gresources>

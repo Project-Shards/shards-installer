@@ -1,0 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/projects.shards.installer.desktop.in
+data/projects.shards.installer.metainfo.xml.in
+data/projects.shards.installer.gschema.xml
+src/main.c
+src/shardsinstaller-window.c
+src/shardsinstaller-window.ui

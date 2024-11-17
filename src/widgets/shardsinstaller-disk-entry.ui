@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.2"/>
+  <template class="ShardsinstallerDiskEntry" parent="GtkToggleButton">
+    <signal name="toggled" handler="toggle_callback" swapped="true"/>
+    <style>
+      <class name="disk"/>
+      <class name="flat"/>
+    </style>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="valign">fill</property>
+        <property name="halign">fill</property>
+        <child>
+          <object class="GtkImage" id="disk_type">
+            <property name="icon-name">drive-harddisk-symbolic</property>
+            <property name="pixel-size">100</property>
+            <property name="margin-bottom">5</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="disk_name"/>
+        </child>
+        <child>
+          <object class="GtkLabel" id="disk_size"/>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

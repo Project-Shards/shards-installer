@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=projects.shards.installer
+Exec=@bindir@/shardsinstaller --gapplication-service

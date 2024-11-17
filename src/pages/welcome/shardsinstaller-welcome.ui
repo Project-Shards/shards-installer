@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="ShardsinstallerWelcome" parent="AdwBin">
+    <property name="valign">fill</property>
+    <property name="halign">fill</property>
+    <property name="hexpand">True</property>
+    <property name="vexpand">True</property>
+    <child>
+      <object class="AdwStatusPage">
+        <property name="valign">fill</property>
+        <property name="halign">fill</property>
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
+        <property name="title">Welcome to Project Shards</property>
+        <property name="description">Press 'Start' to begin the installation</property>
+        <property name="icon-name">projects.shards.installer</property>
+        <child>
+          <object class="GtkButton" id="start_button">
+            <property name="label">Start</property>
+            <property name="valign">center</property>
+            <property name="halign">center</property>
+            <signal name="clicked" handler="start_install" swapped="true"/>
+            <style>
+              <class name="pill"/>
+              <class name="suggested-action"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
+
