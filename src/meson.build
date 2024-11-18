@@ -6,7 +6,10 @@ shardsinstaller_sources = [
   'pages/welcome/shardsinstaller-welcome.c',
   'pages/disk-selection/shardsinstaller-disk-selection.c',
   'pages/install-progress/shardsinstaller-install-progress.c',
-  'utils/disks.c'
+  'pages/install-fail/shardsinstaller-install-fail.c',
+  'pages/install-success/shardsinstaller-install-success.c',
+  'utils/disks.c',
+  'utils/gnome-session-quit.c'
 ]
 
 shardsinstaller_deps = [

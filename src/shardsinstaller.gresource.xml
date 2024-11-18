@@ -6,6 +6,8 @@
     <file preprocess="xml-stripblanks">pages/welcome/shardsinstaller-welcome.ui</file>
     <file preprocess="xml-stripblanks">pages/disk-selection/shardsinstaller-disk-selection.ui</file>
     <file preprocess="xml-stripblanks">pages/install-progress/shardsinstaller-install-progress.ui</file>
+    <file preprocess="xml-stripblanks">pages/install-fail/shardsinstaller-install-fail.ui</file>
+    <file preprocess="xml-stripblanks">pages/install-success/shardsinstaller-install-success.ui</file>
     <file>style.css</file>
   </gresource>
   <gresource prefix="/project/shards/installer/icons/scalable/actions/">

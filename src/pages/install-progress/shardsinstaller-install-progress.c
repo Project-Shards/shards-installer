@@ -18,9 +18,14 @@
  * SPDX-License-Identifier: LGPL-3.0-only
  */
 
-
-#include "config.h"
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <gio/gio.h>
+#include <gio-unix-2.0/gio/gunixinputstream.h>
 #include "shardsinstaller-install-progress.h"
 
 struct _ShardsinstallerInstallProgress
@@ -40,10 +45,74 @@ static guint signals[SIGNAL_LAST_SIGNAL];
 
 G_DEFINE_FINAL_TYPE (ShardsinstallerInstallProgress, shardsinstaller_install_progress, ADW_TYPE_BIN)
 
+gboolean install_finished = false;
+
+static void
+child_watch_cb (GPid     pid,
+                gint     status,
+                gpointer user_data)
+{
+    ShardsinstallerInstallProgress *self = user_data;
+
+	if (g_spawn_check_wait_status (status, NULL))
+		g_signal_emit (self, signals[SIGNAL_INSTALLATION_SUCCESS], 0, NULL);
+	else
+		g_signal_emit (self, signals[SIGNAL_INSTALLATION_FAIL], 0, NULL);
+
+	install_finished = true;
+	g_spawn_close_pid (pid);
+}
+
+void
+shardsinstaller_read_progress_thread (GTask *task,
+							  		 gpointer source_object,
+							  		 gpointer task_data,
+							  		 GCancellable *cancellable)
+{
+	ShardsinstallerInstallProgress *self = source_object;
+	GInputStream *stderr_stream = task_data;
+	GError *error = NULL;
+
+	char *buf = malloc (4);
+	memset (buf, 0, 4);
+	while (!install_finished)
+	{
+		g_input_stream_read (stderr_stream, buf, 4, NULL, NULL);
+		if (buf)
+		{
+			printf ("%s\n", buf);
+			int progress = atoi (buf);
+			gtk_progress_bar_set_fraction (self->progressbar, progress/100.0);
+		}
+	}
+	g_task_return_int (task, 0);
+}
+
 void
 shardsinstaller_install_progress_begin_install (ShardsinstallerInstallProgress *self)
 {
-	return;
+	gchar * argv[] = { "/usr/bin/shardsimgr", NULL };
+	gint child_stdout, child_stderr;
+	GPid child_pid;
+	g_autoptr(GError) error = NULL;
+
+	g_spawn_async_with_pipes (NULL, argv, NULL, G_SPAWN_DO_NOT_REAP_CHILD, NULL,
+                          	 NULL, &child_pid, NULL, &child_stdout,
+                          	 &child_stderr, &error);
+	if (error != NULL)
+  	{
+	    g_error ("Spawning child failed: %s", error->message);
+	    return;
+  	}
+	g_child_watch_add (child_pid, child_watch_cb, self);
+
+	GTask *task = g_task_new (self, NULL, NULL, NULL);
+
+	GInputStream *stderr_stream = g_unix_input_stream_new (child_stderr, false);
+
+	g_task_set_task_data (task, stderr_stream, NULL);
+	g_task_run_in_thread (task, shardsinstaller_read_progress_thread);
+	g_object_unref (task);
 }
 
 static void

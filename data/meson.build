@@ -28,6 +28,26 @@ install_data('projects.shards.installer.gschema.xml',
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas'
 )
 
+install_data(
+    'session/installer-session.desktop',
+    install_dir: join_paths(get_option('datadir'), 'wayland-sessions')
+)
+
+install_data(
+    'session/installer-session.json',
+    install_dir: join_paths(get_option('datadir'), 'gnome-shell', 'modes')
+)
+
+install_data(
+    'session/installer-session.session',
+    install_dir: join_paths(get_option('datadir'), 'gnome-session', 'sessions')
+)
+
+install_data(
+    'session/installer-session.session.conf',
+    install_dir: join_paths(get_option('datadir'), '..', 'lib', 'systemd', 'user', 'gnome-session@installer-session.target.d')
+)
+
 compile_schemas = find_program('glib-compile-schemas', required: false, disabler: true)
 test('Validate schema file',
      compile_schemas,

@@ -103,11 +103,18 @@ shardsinstaller_disk_selection_populate_disks (ShardsinstallerDiskSelection *sel
 	GList *disks = get_disks (client);
 
 	struct DiskData *disk = disks->data;
+
+	if (!disk)
+		return;
+
 	GtkWidget *first_disk = shardsinstaller_disk_entry_new (disk->disk_name, disk->disk_size_readable, disk->is_spinny, GTK_WIDGET (self), selected_disk);
 	gtk_box_append (self->disk_list, first_disk);
 
+
 	for (GList *l = disks->next; l != NULL; l = l->next)
 	{
+        if (!disks)
+            return;
 		disk = l->data;
 		GtkWidget *disk_widget = shardsinstaller_disk_entry_new (disk->disk_name, disk->disk_size_readable, disk->is_spinny, GTK_WIDGET (self), selected_disk);
 		gtk_toggle_button_set_group (GTK_TOGGLE_BUTTON (disk_widget), GTK_TOGGLE_BUTTON (first_disk));

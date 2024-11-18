@@ -37,12 +37,12 @@ shardsinstaller_disk_entry_new (const char *diskname, const char *size, const gb
 	if (!is_spinny)
 		gtk_image_set_from_icon_name (self->disk_type, "ssd-symbolic");
 
-	gtk_label_set_label (self->disk_size, size);
-	gtk_label_set_label (self->disk_name, diskname);
+	gtk_label_set_label (self->disk_size, strdup(size));
+	gtk_label_set_label (self->disk_name, strdup(diskname));
 	gtk_label_set_ellipsize (self->disk_name, PANGO_ELLIPSIZE_END);
 	gtk_label_set_max_width_chars (self->disk_name, 11);
 	if (strlen(diskname) > 11)
-		gtk_widget_set_tooltip_text (GTK_WIDGET (self), diskname);
+		gtk_widget_set_tooltip_text (GTK_WIDGET (self), strdup(diskname));
 
 	return GTK_WIDGET (self);
 }

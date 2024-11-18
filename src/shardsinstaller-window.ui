@@ -28,8 +28,15 @@
             </child>
             <child>
               <object class="ShardsinstallerInstallProgress" id="install_progress_page">
-                <!--<signal name="continue-installation" handler="disk_selected_cb" swapped="true"/>-->
+                <signal name="installation-fail" handler="install_fail_cb" swapped="true"/>
+                <signal name="installation-success" handler="install_success_cb" swapped="true"/>
               </object>
+            </child>
+            <child>
+              <object class="ShardsinstallerInstallFail" id="install_fail_page"/>
+            </child>
+            <child>
+              <object class="ShardsinstallerInstallSuccess" id="install_success_page"/>
             </child>
           </object>
         </property>

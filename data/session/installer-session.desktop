@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Installer Session
+Comment=Limited gnome session for the shards installer
+Exec=env GNOME_SHELL_SESSION_MODE='installer-session' gnome-session --session='installer-session'
+TryExec=gnome-shell
+Icon=
+Type=Application
+DesktopNames=shards:GNOME

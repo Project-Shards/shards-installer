@@ -124,4 +124,3 @@ init_udisks (void)
 	}
 	return client;
 }
-

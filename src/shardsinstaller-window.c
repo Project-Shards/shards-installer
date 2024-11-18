@@ -22,6 +22,8 @@
 #include "pages/welcome/shardsinstaller-welcome.h"
 #include "pages/disk-selection/shardsinstaller-disk-selection.h"
 #include "pages/install-progress/shardsinstaller-install-progress.h"
+#include "pages/install-fail/shardsinstaller-install-fail.h"
+#include "pages/install-success/shardsinstaller-install-success.h"
 #include "shardsinstaller-window.h"
 #include "widgets/shardsinstaller-disk-entry.h"
 
@@ -32,6 +34,8 @@ struct _ShardsinstallerWindow
 	AdwCarousel	     *carousel;
 	ShardsinstallerDiskSelection *disk_select_page;
 	ShardsinstallerInstallProgress *install_progress_page;
+    ShardsinstallerInstallFail *install_fail_page;
+    ShardsinstallerInstallSuccess *install_success_page;
 };
 
 G_DEFINE_FINAL_TYPE (ShardsinstallerWindow, shardsinstaller_window, ADW_TYPE_APPLICATION_WINDOW)
@@ -56,6 +60,18 @@ disk_selected_cb (ShardsinstallerWindow *self)
 }
 
 static void
+install_fail_cb (ShardsinstallerWindow *self)
+{
+    adw_carousel_scroll_to (self->carousel, GTK_WIDGET (self->install_fail_page), true);
+}
+
+static void
+install_success_cb (ShardsinstallerWindow *self)
+{
+    adw_carousel_scroll_to (self->carousel, GTK_WIDGET (self->install_success_page), true);
+}
+
+static void
 shardsinstaller_window_class_init (ShardsinstallerWindowClass *klass)
 {
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -64,8 +80,12 @@ shardsinstaller_window_class_init (ShardsinstallerWindowClass *klass)
 	gtk_widget_class_bind_template_child (widget_class, ShardsinstallerWindow, carousel);
 	gtk_widget_class_bind_template_child (widget_class, ShardsinstallerWindow, disk_select_page);
 	gtk_widget_class_bind_template_child (widget_class, ShardsinstallerWindow, install_progress_page);
+    gtk_widget_class_bind_template_child (widget_class, ShardsinstallerWindow, install_fail_page);
+    gtk_widget_class_bind_template_child (widget_class, ShardsinstallerWindow, install_success_page);
 	gtk_widget_class_bind_template_callback (widget_class, start_installation_cb);
 	gtk_widget_class_bind_template_callback (widget_class, disk_selected_cb);
+    gtk_widget_class_bind_template_callback (widget_class, install_fail_cb);
+    gtk_widget_class_bind_template_callback (widget_class, install_success_cb);
 }
 
 static void
@@ -74,6 +94,8 @@ shardsinstaller_window_init (ShardsinstallerWindow *self)
     g_type_ensure (SHARDSINSTALLER_TYPE_WELCOME);
     g_type_ensure (SHARDSINSTALLER_TYPE_DISK_SELECTION);
 	g_type_ensure (SHARDSINSTALLER_TYPE_INSTALL_PROGRESS);
+    g_type_ensure (SHARDSINSTALLER_TYPE_INSTALL_FAIL);
+    g_type_ensure (SHARDSINSTALLER_TYPE_INSTALL_SUCCESS);
 
 	gtk_widget_init_template (GTK_WIDGET (self));
 }

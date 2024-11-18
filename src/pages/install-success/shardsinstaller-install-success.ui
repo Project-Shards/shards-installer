@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="ShardsinstallerInstallSuccess" parent="AdwBin">
+    <property name="valign">fill</property>
+    <property name="halign">fill</property>
+    <property name="hexpand">True</property>
+    <property name="vexpand">True</property>
+    <child>
+      <object class="AdwStatusPage">
+        <property name="valign">fill</property>
+        <property name="halign">fill</property>
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
+        <property name="title">Installation Finished</property>
+        <property name="description">Press 'Reboot' to reboot your computer.</property>
+        <property name="icon-name">emblem-ok-symbolic</property>
+        <child>
+          <object class="GtkButton" id="start_button">
+            <property name="label">Reboot</property>
+            <property name="valign">center</property>
+            <property name="halign">center</property>
+            <signal name="clicked" handler="reboot_system" swapped="true"/>
+            <style>
+              <class name="pill"/>
+              <class name="suggested-action"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
