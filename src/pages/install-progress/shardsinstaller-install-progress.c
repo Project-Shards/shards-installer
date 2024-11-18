@@ -80,7 +80,6 @@ shardsinstaller_read_progress_thread (GTask *task,
 		g_input_stream_read (stderr_stream, buf, 4, NULL, NULL);
 		if (buf)
 		{
-			printf ("%s\n", buf);
 			int progress = atoi (buf);
 			gtk_progress_bar_set_fraction (self->progressbar, progress/100.0);
 		}
