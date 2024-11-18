@@ -14,7 +14,7 @@
         <property name="hexpand">True</property>
         <property name="vexpand">True</property>
         <property name="title">Welcome to Project Shards</property>
-        <property name="description">Press 'Start' to begin the installation</property>
+        <property name="description">Press “Start” to begin the installation</property>
         <property name="icon-name">projects.shards.installer</property>
         <child>
           <object class="GtkButton" id="start_button">
