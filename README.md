@@ -1,3 +1,3 @@
-# shardsinstaller
+# Shards Installer
 
-A description of this project.
+Installer for Project Shards
