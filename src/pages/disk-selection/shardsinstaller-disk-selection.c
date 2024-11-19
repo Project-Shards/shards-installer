@@ -57,7 +57,7 @@ response_cb (AdwAlertDialog    		  *dialog,
 		return;
 
 	FILE *optionfiles = fopen ("/tmp/shardsinstaller", "w");
-	fprintf (optionfiles, "INSTALL_DISK='%s'\n", disk_name);
+	fprintf (optionfiles, "INSTALL_DISK='%s'\n", disk_path);
 	fclose (optionfiles);
 
 	g_signal_emit (self, signals[SIGNAL_CONTINUE_INSTALLATION], 0, NULL);
