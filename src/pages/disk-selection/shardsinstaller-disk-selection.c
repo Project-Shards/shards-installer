@@ -20,7 +20,6 @@
 
 
 #include "../../widgets/shardsinstaller-disk-entry.h"
-#include "../../utils/disks.h"
 #include <udisks/udisks.h>
 #include "shardsinstaller-disk-selection.h"
 
@@ -90,9 +89,10 @@ installation_continue (ShardsinstallerDiskSelection *self)
 }
 
 void
-selected_disk (GtkWidget *self, const char *chosen_disk)
+selected_disk (GtkWidget *self, const char *chosen_disk, const char *chosen_disk_path)
 {
 	disk_name = chosen_disk;
+    disk_path = chosen_disk_path;
 	ShardsinstallerDiskSelection *page = SHARDSINSTALLER_DISKSELECTION (self);
 	gtk_widget_set_sensitive (GTK_WIDGET (page->continue_button), true);
 }
@@ -108,7 +108,7 @@ shardsinstaller_disk_selection_populate_disks (ShardsinstallerDiskSelection *sel
 	if (!disk)
 		return;
 
-	GtkWidget *first_disk = shardsinstaller_disk_entry_new (disk->disk_name, disk->disk_size_readable, disk->is_spinny, GTK_WIDGET (self), selected_disk);
+	GtkWidget *first_disk = shardsinstaller_disk_entry_new (disk, GTK_WIDGET (self), selected_disk);
 	gtk_box_append (self->disk_list, first_disk);
 
 
@@ -117,7 +117,7 @@ shardsinstaller_disk_selection_populate_disks (ShardsinstallerDiskSelection *sel
         if (!disks)
             return;
 		disk = l->data;
-		GtkWidget *disk_widget = shardsinstaller_disk_entry_new (disk->disk_name, disk->disk_size_readable, disk->is_spinny, GTK_WIDGET (self), selected_disk);
+		GtkWidget *disk_widget = shardsinstaller_disk_entry_new (disk, GTK_WIDGET (self), selected_disk);
 		gtk_toggle_button_set_group (GTK_TOGGLE_BUTTON (disk_widget), GTK_TOGGLE_BUTTON (first_disk));
 		gtk_box_append (self->disk_list, disk_widget);
 		disk_list_free (l->data, NULL);

@@ -21,11 +21,12 @@
 
 #pragma once
 
+#include "../utils/disks.h"
 #include <adwaita.h>
 
 G_BEGIN_DECLS
 
-GtkWidget* shardsinstaller_disk_entry_new (const char *diskname, const char *size, const gboolean is_ssd, GtkWidget *page, void (*toggle_callback)(GtkWidget*, const char*));
+GtkWidget* shardsinstaller_disk_entry_new (struct DiskData *disk, GtkWidget *page, void (*toggle_callback)(GtkWidget*, const char*, const char*));
 
 #define SHARDSINSTALLER_TYPE_DISK_ENTRY (shardsinstaller_disk_entry_get_type())
 
