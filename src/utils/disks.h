@@ -20,6 +20,8 @@
 
 #include <udisks/udisks.h>
 
+#ifndef DISKS_H
+#define DISKS_H
 struct DiskData
 {
 	const char *disk_name;
@@ -29,6 +31,7 @@ struct DiskData
 	guint64 disk_size;
 	gboolean is_spinny;
 };
+#endif /* DISKS_H */
 
 UDisksClient* init_udisks (void);
 

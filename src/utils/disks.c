@@ -40,6 +40,8 @@ get_disks (UDisksClient* client)
 		{
 			if (strstr (udisks_block_get_id (udisk_block), "-part") != NULL)
 				continue;
+            if (udisks_object_peek_partition_table (object) == NULL)
+                continue;
 
 			const gchar *device, *drive;
 			const gchar *id, *label;
