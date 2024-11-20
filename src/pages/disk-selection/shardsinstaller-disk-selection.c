@@ -102,11 +102,12 @@ shardsinstaller_disk_selection_populate_disks (ShardsinstallerDiskSelection *sel
 {
 	UDisksClient *client = init_udisks ();
 	GList *disks = get_disks (client);
+	g_print ("Got disks\n");
+
+	if (!disks)
+		return;
 
 	struct DiskData *disk = disks->data;
-
-	if (!disk)
-		return;
 
 	GtkWidget *first_disk = shardsinstaller_disk_entry_new (disk, GTK_WIDGET (self), selected_disk);
 	gtk_box_append (self->disk_list, first_disk);
@@ -114,7 +115,7 @@ shardsinstaller_disk_selection_populate_disks (ShardsinstallerDiskSelection *sel
 
 	for (GList *l = disks->next; l != NULL; l = l->next)
 	{
-        if (!disks)
+        if (!l)
             return;
 		disk = l->data;
 		GtkWidget *disk_widget = shardsinstaller_disk_entry_new (disk, GTK_WIDGET (self), selected_disk);

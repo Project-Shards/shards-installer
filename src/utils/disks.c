@@ -38,25 +38,25 @@ get_disks (UDisksClient* client)
 		udisk_block = udisks_object_peek_block (object);
 		if (udisk_block != NULL)
 		{
-			if (strstr (udisks_block_get_id (udisk_block), "-part") != NULL)
-				continue;
-            if (udisks_object_peek_partition_table (object) == NULL)
-                continue;
 
 			const gchar *device, *drive;
 			const gchar *id, *label;
 			const gchar * const *symlinks;
-			UDisksDrive *udisk_drive = udisks_client_get_drive_for_block (client, udisk_block);
-
-			if (udisk_block == NULL)
-				continue;
+			UDisksDrive *udisk_drive;
 
 			drive = udisks_block_get_drive(udisk_block);
 			if (drive == NULL || g_strcmp0(drive, "/") == 0)
 				continue;
 
 			device = udisks_block_get_device(udisk_block);
-			if (device == NULL)
+			if (device == NULL || g_strrstr(device, "/dev/sr") != NULL)
+				continue;
+
+			if (strstr (udisks_block_get_id (udisk_block), "-part") != NULL)
+				continue;
+
+			udisk_drive = udisks_client_get_drive_for_block (client, udisk_block);
+			if (udisk_drive == NULL)
 				continue;
 
 			const gchar *name = udisks_drive_get_model (udisk_drive);
@@ -64,6 +64,8 @@ get_disks (UDisksClient* client)
 				name = "";
 
 			guint64 size = udisks_block_get_size (udisk_block);
+			if (size < 21474836480) // 20GB
+				continue;
 
 			gboolean is_spinny = (udisks_drive_get_rotation_rate (udisk_drive) != 0);
 
